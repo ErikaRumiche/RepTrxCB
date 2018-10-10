@@ -1,0 +1,53 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context-4.2.xsd
+                           http://www.springframework.org/schema/cache
+                           http://www.springframework.org/schema/cache/spring-cache-4.2.xsd
+                           http://www.springframework.org/schema/jee 
+                           http://www.springframework.org/schema/jee/spring-jee-4.2.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="pe.com.entel.reportetransaccionescb"/>
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+          id="corePlaceHolder">
+        <property name="ignoreUnresolvablePlaceholders" value="false"/>
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+        <property name="fileEncoding" value="UTF-8" />
+        <property name="searchSystemEnvironment" value="true"/>
+        <property name="locations">
+            <list>
+                <value>file:${reportetransaccionescb.dir.config}:jdbc.properties</value>
+                <value>classpath:reptranscb.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="dataSourcePCarBill" class="oracle.jdbc.pool.OracleDataSource" destroy-method="close">
+        <property name="URL" value="${jdbc.pcarbill.url}"/>
+        <property name="user" value="${jdbc.pcarbill.username}"/>
+        <property name="password" value="${jdbc.pcarbill.password}"/>
+    </bean>
+
+    <!--<bean id="dataSourcePCarBill" class="pe.com.entel.reportetransaccionescb.util.CustomBasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.pcarbill.driverClassName}"/>
+        <property name="url" value="${jdbc.pcarbill.url}"/>
+        <property name="username" value="${jdbc.pcarbill.username}"/>
+        <property name="password" value="${jdbc.pcarbill.password}"/>
+        <property name="initialSize" value="${jdbc.pcarbill.initialSize}"/>
+        <property name="maxActive" value="${jdbc.pcarbill.maxActive}"/>
+        <property name="minIdle" value="${jdbc.pcarbill.minIdle}"/>
+        <property name="accessToUnderlyingConnectionAllowed" value="${jdbc.pcarbill.accessToUnderlyingConnectionAllowed}" />
+    </bean>-->
+
+</beans>
